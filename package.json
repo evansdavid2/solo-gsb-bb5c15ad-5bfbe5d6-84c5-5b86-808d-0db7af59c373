@@ -1,0 +1,16 @@
+{
+  "name": "stage-change-cue-sheet",
+  "version": "1.0.0",
+  "description": "舞台监督排练换景台：按提示号录入道具同时转移，整组校验、重放与最终区位展示",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "express": "^4.21.2"
+  }
+}

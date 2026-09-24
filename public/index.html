@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>舞台换景排练台</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎭 舞台换景排练台</h1>
+    <p class="subtitle">按提示号录入成组道具转移 · 整组校验 · 全量重放 · 最终区位一览</p>
+  </header>
+
+  <div id="banner" class="banner hidden"></div>
+
+  <main class="layout">
+    <!-- 左栏：基础数据 -->
+    <section class="col">
+      <div class="card">
+        <h2>区位</h2>
+        <p class="hint">「后台」可容纳任意数量道具；其他区位各容纳一件。</p>
+        <ul id="location-list" class="item-list"></ul>
+        <form id="location-form" class="inline-form">
+          <input type="text" name="name" placeholder="新增单件区位名称，如：上场门" required />
+          <button type="submit">添加区位</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>道具</h2>
+        <ul id="prop-list" class="item-list"></ul>
+        <form id="prop-form" class="stack-form">
+          <input type="text" name="name" placeholder="道具名称，如：木桌" required />
+          <select name="initialLocationId" required></select>
+          <button type="submit">添加道具</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>最终区位</h2>
+        <p class="hint">按当前全部提示重放后的结果。</p>
+        <div id="final-board" class="board"></div>
+      </div>
+    </section>
+
+    <!-- 右栏：提示与重放 -->
+    <section class="col wide">
+      <div class="card">
+        <h2 id="cue-form-title">录入提示</h2>
+        <p class="hint">
+          同一提示号下的所有转移<strong>同时发生</strong>：每件道具最多出现一次，
+          来源必须与变动前状态一致，完成后单件区位不得被多件道具占用；
+          支持 A↔B 同组互换。校验不过则整组不生效。
+        </p>
+        <form id="cue-form">
+          <div class="form-row">
+            <label>提示号
+              <input type="number" name="cueNo" min="1" step="1" required />
+            </label>
+            <label class="grow">备注
+              <input type="text" name="note" placeholder="如：第二场结束，灯光暗下" />
+            </label>
+          </div>
+
+          <table class="moves-table">
+            <thead>
+              <tr><th>道具</th><th>来源（变动前）</th><th></th><th>目标</th><th></th></tr>
+            </thead>
+            <tbody id="moves-body"></tbody>
+          </table>
+          <div class="form-actions">
+            <button type="button" id="add-move-btn">＋ 增加一条转移</button>
+            <button type="submit" class="primary" id="cue-submit-btn">提交本组</button>
+            <button type="button" id="cue-cancel-btn" class="hidden">取消修改</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>重放结果（按提示号）</h2>
+        <p class="hint">任意提示插入、修改或删除后，都会从初始区位起按提示号重放全部提示。</p>
+        <div id="replay-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
